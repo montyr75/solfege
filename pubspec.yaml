@@ -10,5 +10,5 @@ environment:
 dependencies:
   console: ^4.1.0
 
-dev_dependencies:
-  lints: ^1.0.0
+#dev_dependencies:
+#  lints: ^1.0.0
