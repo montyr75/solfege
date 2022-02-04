@@ -13,7 +13,7 @@ const List<String> chromaticScaleSharp = [
   'G#',
 ];
 
-const List<String> solfege = [
+const List<String> solfegeScale = [
   'do',
   're',
   'mi',
@@ -23,17 +23,6 @@ const List<String> solfege = [
   'ti',
 ];
 
-// pattern does not include the tonic
-const Map<String, List<int>> scaleIndexes = {
-  'major': [0, 2, 4, 5, 7, 9, 11],
+const Map<String, List<int>> scaleSteps = {
+  'major': [0, 2, 2, 1, 2, 2, 2],
 };
-
-// pattern does not include the tonic
-const Map<String, List<Step>> scaleSteps = {
-  'major': [Step.whole, Step.whole, Step.half, Step.whole, Step.whole, Step.whole],
-};
-
-enum Step {
-  half,
-  whole,
-}
