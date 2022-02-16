@@ -7,6 +7,16 @@ enum Accidental {
 }
 
 extension AccidentalX on Accidental {
+  int halfSteps() {
+    switch (this) {
+      case Accidental.doubleFlat: return 2;
+      case Accidental.flat: return 1;
+      case Accidental.natural: return 0;
+      case Accidental.sharp: return -1;
+      case Accidental.doubleSharp: return -2;
+    }
+  }
+
   String toAccidentalString() {
     switch (this) {
       case Accidental.doubleFlat: return '♭♭';
@@ -28,36 +38,45 @@ enum Letter {
   G,
 }
 
+extension LetterX on Letter {
+  Letter nextLetter() => this == Letter.G
+      ? Letter.A
+      : Letter.values[index + 1];
+}
+
 class Note {
   final Letter letter;
   final Accidental? accidental;
 
   const Note(this.letter, [this.accidental]);
 
-  Note sharpen() {
+  Note sharpen([int reps = 1]) {
     assert(accidental == null || accidental != Accidental.values.last);
 
     final acc = accidental ?? Accidental.natural;
-    return Note(letter, Accidental.values[acc.index + 1]);
+    return Note(letter, Accidental.values[acc.index + reps]);
   }
 
-  Note flatten() {
+  Note flatten([int reps = 1]) {
     assert(accidental == null || accidental != Accidental.values.first);
 
     final acc = accidental ?? Accidental.natural;
-    return Note(letter, Accidental.values[acc.index - 1]);
+    return Note(letter, Accidental.values[acc.index - reps]);
   }
-}
 
-const List<Note> naturals = [
-  Note(Letter.A),
-  Note(Letter.B),
-  Note(Letter.C),
-  Note(Letter.D),
-  Note(Letter.E),
-  Note(Letter.F),
-  Note(Letter.G),
-];
+  bool get hasAccidental => accidental != null;
+
+  int halfStepsToNext() {
+    final halfSteps = (letter == Letter.B || letter == Letter.E)
+        ? 1
+        : 2;
+
+    return halfSteps + (accidental?.halfSteps() ?? 0);
+  }
+
+  @override
+  String toString() => "${letter.name}${accidental?.toAccidentalString() ?? ''}";
+}
 
 const List<String> chromaticScaleSharp = [
   'A',
@@ -86,4 +105,8 @@ const List<String> solfegeScale = [
 
 const Map<String, List<int>> scaleSteps = {
   'major': [0, 2, 2, 1, 2, 2, 2],
+};
+
+const Map<String, List<int>> scaleHalfSteps = {
+  'major': [2, 2, 1, 2, 2, 2],
 };
