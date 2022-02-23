@@ -1,5 +1,7 @@
 import 'package:console/console.dart' show Console, Prompter;
 
+typedef PromptValidator = bool Function(String input);
+
 const invalidInput = "Invalid input.";
 
 enum ConsoleColor {
@@ -58,15 +60,16 @@ String? promptForString(String prompt) {
   return Prompter("\n$prompt").promptSync();
 }
 
-String promptForStringExt(String prompt, {String errorMsg = invalidInput}) {
+String promptForStringExt(String prompt, {PromptValidator? validator, String errorMsg = invalidInput}) {
   final input = promptForString(prompt);
 
-  if (input != null && input.isNotEmpty) {
-    return input;
+  // validate input
+  if (input == null || input.isEmpty || (validator != null && !validator(input))) {
+    printError(errorMsg);
+    return promptForStringExt(prompt, validator: validator, errorMsg: errorMsg);
   }
 
-  printError(errorMsg);
-  return promptForStringExt(prompt);
+  return input;
 }
 
 void printMenuItem({

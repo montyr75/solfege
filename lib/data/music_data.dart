@@ -1,3 +1,28 @@
+enum Letter {
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+}
+
+extension LetterX on Letter {
+  Letter nextLetter() => this == Letter.G
+      ? Letter.A
+      : Letter.values[index + 1];
+}
+
+Letter? stringToLetter(String str) {
+  try {
+    return Letter.values.firstWhere((value) => value.name == str.toUpperCase());
+  }
+  catch (e) {
+    return null;
+  }
+}
+
 enum Accidental {
   doubleFlat,
   flat,
@@ -26,22 +51,6 @@ extension AccidentalX on Accidental {
       case Accidental.doubleSharp: return '♯♯';
     }
   }
-}
-
-enum Letter {
-  A,
-  B,
-  C,
-  D,
-  E,
-  F,
-  G,
-}
-
-extension LetterX on Letter {
-  Letter nextLetter() => this == Letter.G
-      ? Letter.A
-      : Letter.values[index + 1];
 }
 
 class Note {
@@ -78,21 +87,6 @@ class Note {
   String toString() => "${letter.name}${accidental?.toAccidentalString() ?? ''}";
 }
 
-const List<String> chromaticScaleSharp = [
-  'A',
-  'A#',
-  'B',
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-];
-
 const List<String> solfegeScale = [
   'do',
   're',
@@ -102,10 +96,6 @@ const List<String> solfegeScale = [
   'la',
   'ti',
 ];
-
-const Map<String, List<int>> scaleSteps = {
-  'major': [0, 2, 2, 1, 2, 2, 2],
-};
 
 const Map<String, List<int>> scaleHalfSteps = {
   'major': [2, 2, 1, 2, 2, 2],
