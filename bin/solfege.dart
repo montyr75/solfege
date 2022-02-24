@@ -6,12 +6,15 @@ import 'package:solfege/utils/scales.dart';
 
 // TODO: Support a few more scale types (minor, etc.).
 
+ScaleType scaleType = ScaleType.major;
+
 void main() {
   Console.init();
 
   final tonic = getTonicFromUser();
+  printScaleTypeMenu();
 
-  printMessage(getMajorScale(tonic).toString());
+  printMessage(getScale(tonic, scaleType).toString());
 }
 
 Note getTonicFromUser() {
@@ -45,4 +48,11 @@ Accidental? printAccidentalMenu() {
   ]);
 
   return accidental;
+}
+
+void printScaleTypeMenu() {
+  printConsoleMenu([
+    ConsoleMenuOption("Major", onSelect: () => scaleType = ScaleType.major),
+    ConsoleMenuOption("Minor", onSelect: () => scaleType = ScaleType.minor),
+  ]);
 }

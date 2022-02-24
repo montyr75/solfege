@@ -1,27 +1,27 @@
 import '../data/music_data.dart';
 
-List<Note> getMajorScale(Note tonic) {
-  final List<Note> majorScale = [tonic];
+List<Note> getScale(Note tonic, ScaleType scaleType) {
+  final List<Note> scale = [tonic];
 
-  for (final halfSteps in scaleHalfSteps["major"]!) {
-    final currentNote = majorScale.last;
+  for (final halfSteps in scaleHalfSteps[scaleType]!) {
+    final currentNote = scale.last;
     final nextNote = Note(currentNote.letter.nextLetter());
 
     final halfStepsToNext = currentNote.halfStepsToNext();
     final diff = halfStepsToNext - halfSteps;
 
     if (diff == 0) {
-      majorScale.add(nextNote);
+      scale.add(nextNote);
     }
     else if (diff < 0) {
-      majorScale.add(nextNote.sharpen(diff.abs()));
+      scale.add(nextNote.sharpen(diff.abs()));
     }
     else {
-      majorScale.add(nextNote.flatten(diff));
+      scale.add(nextNote.flatten(diff));
     }
   }
 
-  return majorScale;
+  return scale;
 }
 
 // String getNoteFromSolfege({required String tonic, required String solfege}) {

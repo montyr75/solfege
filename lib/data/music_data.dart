@@ -22,6 +22,14 @@ Letter? stringToLetter(String str) {
     return null;
   }
 }
+ScaleType? stringToScaleType(String str) {
+  try {
+    return ScaleType.values.firstWhere((value) => value.name == str.toUpperCase());
+  }
+  catch (e) {
+    return null;
+  }
+}
 
 enum Accidental {
   doubleFlat,
@@ -97,6 +105,12 @@ const List<String> solfegeScale = [
   'ti',
 ];
 
-const Map<String, List<int>> scaleHalfSteps = {
-  'major': [2, 2, 1, 2, 2, 2],
+const Map<ScaleType, List<int>> scaleHalfSteps = {
+  ScaleType.major: [2, 2, 1, 2, 2, 2],
+  ScaleType.minor: [2, 1, 2, 2, 1, 2],
 };
+
+enum ScaleType {
+  major,
+  minor
+}
