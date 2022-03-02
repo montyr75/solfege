@@ -4,14 +4,18 @@ import 'package:solfege/data/music_data.dart';
 import 'package:solfege/utils/console_utils.dart';
 import 'package:solfege/utils/scales.dart';
 
-// TODO: Support a few more scale types (minor, etc.).
-
 void main() {
   Console.init();
 
   final tonic = getTonicFromUser();
 
-  printMessage(getScale(tonic, printScaleTypeMenu()).toString());
+  final scale = getScale(tonic, printScaleTypeMenu());
+
+  consoleNewLine();
+
+  for (int i = 0; i < scale.length; i++) {
+    print("${scale[i]} (${solfegeScale[i]})");
+  }
 }
 
 Note getTonicFromUser() {
@@ -56,4 +60,16 @@ ScaleType printScaleTypeMenu() {
   ]);
 
   return scaleType;
+}
+
+extension IterableStringX on Iterable<String> {
+  String toPaddedVerticalString([int width = 3]) {
+    final sb = StringBuffer();
+
+    for (final value in this) {
+      sb.writeln(value.padRight(width));
+    }
+
+    return sb.toString();
+  }
 }

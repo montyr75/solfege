@@ -23,16 +23,3 @@ List<Note> getScale(Note tonic, ScaleType scaleType) {
 
   return scale;
 }
-
-// String getNoteFromSolfege({required String tonic, required String solfege}) {
-//   assert(chromaticScaleSharp.contains(tonic) && solfegeScale.contains(solfege));
-//
-//   // get the major scale of the tonic
-//   final scale = getMajorScale(tonic);
-//
-//   // get the index of solfege in solfegeScale
-//   final solfegeIndex = solfegeScale.indexOf(solfege);
-//
-//   // return the note from the major scale at the solfege index
-//   return scale[solfegeIndex];
-// }
